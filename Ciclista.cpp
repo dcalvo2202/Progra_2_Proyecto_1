@@ -1,14 +1,8 @@
 #include "Ciclista.h"
 
-Ciclista::Ciclista() {
-	horasEntreno = 0;
-	temPromedio = 0;
-}
+Ciclista::Ciclista() : horasEntreno{ 0 }, temPromedio{ 0 } {}
 
-Ciclista::Ciclista(int _horasEntreno, double _temPromedio) {
-	horasEntreno = _horasEntreno;
-	temPromedio = _temPromedio;
-}
+Ciclista::Ciclista(int _horasEntreno, double _temPromedio) : horasEntreno{ _horasEntreno }, temPromedio{ _temPromedio } {}
 
 Ciclista::~Ciclista() {
 }

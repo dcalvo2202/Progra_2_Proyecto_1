@@ -1,16 +1,9 @@
 #include "Nadador.h"
 
-Nadador::Nadador() {
-	masaMuscular = 0;
-	peso = 0;
-	porcGrasaCorp = 0;
-}
+Nadador::Nadador() : masaMuscular{ 0 }, peso{ 0 }, porcGrasaCorp{ 0 } {}
 
-Nadador::Nadador(double _masaMuscular, double _peso, double _porcGrasaCorp) {
-	masaMuscular = _masaMuscular;
-	peso = _peso;
-	porcGrasaCorp = _porcGrasaCorp;
-}
+Nadador::Nadador(double _masaMuscular, double _peso, double _porcGrasaCorp)
+	: masaMuscular{ _masaMuscular }, peso{ _peso }, porcGrasaCorp{ _porcGrasaCorp } {}
 
 Nadador::~Nadador()
 {

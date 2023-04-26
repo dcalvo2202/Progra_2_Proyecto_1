@@ -1,18 +1,10 @@
 #include "Corredor.h"
 
-Corredor::Corredor() {
-	sexo = ' ';
-	estatura = 0;
-}
+Corredor::Corredor() : sexo{ ' ' }, estatura{ 0 } {}
 
-Corredor::Corredor(char _sexo, double _estatura) {
-	sexo = _sexo;
-	estatura = _estatura;
-}
+Corredor::Corredor(char _sexo, double _estatura) : sexo{ _sexo }, estatura{ _estatura } {}
 
-Corredor::~Corredor()
-{
-}
+Corredor::~Corredor() {}
 
 void Corredor::setSexo(char _sexo) {
 	sexo = _sexo;
