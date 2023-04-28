@@ -11,6 +11,7 @@ private:
 	Ciclista* ciclista;
 	Corredor* corredor;
 	Nadador* nadador;
+	Lista<Fecha>* fechasActTriatlonista;
 public:
 	Triatlonista();
 	Triatlonista(string, string, string, Fecha*, int, int, Ciclista*, Corredor*, Nadador*);
@@ -25,6 +26,7 @@ public:
 	Ciclista* getCiclista();
 	Corredor* getCorredor();
 	Nadador* getNadador();
+	string getFechaActTriatlonista(int);
 	string toString();
 };
 

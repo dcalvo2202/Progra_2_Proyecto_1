@@ -6,6 +6,11 @@ Triatlonista::Triatlonista() {
 	ciclista = new Ciclista();
 	corredor = new Corredor();
 	nadador = new Nadador();
+
+	fechasActTriatlonista = new Lista<Fecha>();
+	fechasActTriatlonista->insertarFinal(new Fecha()); //Las fechas se encuentran en el mismo orden en el que se crean los atributos
+	fechasActTriatlonista->insertarFinal(new Fecha());
+	fechasActTriatlonista->actualizarTodasFechasAtributo();
 }
 
 Triatlonista::Triatlonista(string _cedula, string _nombre, string _telefono, Fecha* _fechaNac, int _cantPartIronMan, int _cantTriGanados, Ciclista* _ciclista, Corredor* _corredor, Nadador* _nadador) : Deportista(_cedula, _nombre, _telefono, _fechaNac) {
@@ -14,6 +19,11 @@ Triatlonista::Triatlonista(string _cedula, string _nombre, string _telefono, Fec
 	ciclista = _ciclista;
 	corredor = _corredor;
 	nadador = _nadador;
+
+	fechasActTriatlonista = new Lista<Fecha>();
+	fechasActTriatlonista->insertarFinal(new Fecha()); //Las fechas se encuentran en el mismo orden en el que se crean los atributos
+	fechasActTriatlonista->insertarFinal(new Fecha());
+	fechasActTriatlonista->actualizarTodasFechasAtributo();
 }
 
 Triatlonista::~Triatlonista()
@@ -22,10 +32,12 @@ Triatlonista::~Triatlonista()
 
 void Triatlonista::setCantPartIronMan(int _cantPartIronMan) {
 	cantPartIronMan = _cantPartIronMan;
+	fechasActTriatlonista->actualizarFechaAtributo(0);
 }
 
 void Triatlonista::setCantTriGanados(int _cantTriGanados) {
 	cantTriGanados = _cantTriGanados;
+	fechasActTriatlonista->actualizarFechaAtributo(1);
 }
 
 void Triatlonista::setCiclista(Ciclista* _ciclista) {

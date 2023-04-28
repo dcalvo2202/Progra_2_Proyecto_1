@@ -30,6 +30,14 @@ public:
 	T* obtenerGrupo(int);
 	T* obtenerCurso(int);
 	bool cancelarMatricula(string);
+	Nodo<T>* getPrimero();
+	T* obtenerElementoPos(int);
+
+	//Para utilizar con fecha
+	void actualizarFechaAtributo(int);
+	void actualizarTodasFechasAtributo();
+
+
 };
 template<class T>
 Lista<T>::Lista() {
@@ -146,7 +154,7 @@ template<class T>
 string Lista<T>::mostrarCliente(string id) {
 	actual = primero;
 	while (actual != nullptr) {
-		if (actual->getDato()->getIdDeportista() == _id) {
+		if (actual->getDato()->getIdDeportista() == id) {
 			return actual->getDato()->toString();
 		}
 		actual = actual->getSig();
@@ -191,6 +199,7 @@ string Lista<T>::mostrarInfoGrupos() {
 		return actual->getDato()->toStringBasico();
 		actual = actual->getSig();
 	}
+	return ""; //Revisar este metodo, parece que se quiere mostrar informacion de los grupos, pero el return evita eso.
 }
 
 template<class T>
@@ -231,20 +240,20 @@ T* Lista<T>::obtenerCurso(int cod) {
 
 template<class T>
 bool Lista<T>::cancelarMatricula(string id) {
-	Nodo* aux = nullptr;
+	Nodo<T>* aux = nullptr;
 	actual = primero;
 	if (primero == nullptr) {
 		return false;
 	}
 	else {
-		if (primero->getDato()->getId() == id) {
+		if (primero->getDato()->getIdDeportista() == id) {
 			actual = actual->getSig();
 			delete (primero);
 			primero = actual;
 			return true;
 		}
 	}
-	while (actual != nullptr && actual->getDato()->getId() != id) {
+	while (actual != nullptr && actual->getDato()->getIdDeportista() != id) {
 		aux = actual;
 		actual = actual->getSig();
 	}
@@ -257,4 +266,35 @@ bool Lista<T>::cancelarMatricula(string id) {
 		return true;
 	}
 	return false;
+}
+
+template<class T>
+Nodo<T>* Lista<T>::getPrimero() { return primero; }
+
+template<class T>
+T* Lista<T>::obtenerElementoPos(int pos) {
+	actual = primero;
+	for (int i = 0; i < pos; i++) {
+		actual = actual->getSig();
+	}
+	return actual->getDato();
+}
+
+//Para utilizar con fecha
+template<class T>
+void Lista<T>::actualizarFechaAtributo(int act) {
+	actual = primero;
+	for (int i = 0; i < act; i++) {
+		actual = actual->getSig();
+	}
+	actual->getDato()->actualizarPorActual();
+}
+
+template<class T>
+void Lista<T>::actualizarTodasFechasAtributo() {
+	actual = primero;
+	while (actual != nullptr) {
+		actual->getDato()->actualizarPorActual();
+		actual = actual->getSig();
+	}
 }

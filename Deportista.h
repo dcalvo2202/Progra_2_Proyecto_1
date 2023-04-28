@@ -1,5 +1,6 @@
 #pragma once
 #include "Fecha.h"
+#include "Lista.h"
 
 class Deportista {
 protected:
@@ -7,6 +8,7 @@ protected:
 	string nombre;
 	string telefono;
 	Fecha* fechaNac;
+	Lista<Fecha>* fechasActDeportista;
 public:
 	Deportista();
 	Deportista(string, string, string, Fecha*);
@@ -20,5 +22,6 @@ public:
 	string getTelefono();
 	Fecha* getFechaNac();
 	virtual string toString() = 0;
+	string getFechaActDeportista(int);
 	string toStringBasico();
 };

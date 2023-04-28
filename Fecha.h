@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <sstream>
+#include <Windows.h>
 using namespace std;
 
 class Fecha {
@@ -18,6 +19,7 @@ public:
 	int getDia();
 	int getMes();
 	int getAnnio();
+	void actualizarPorActual();
 	string toString();
 };
 
