@@ -21,6 +21,7 @@ public:
 	bool cursoEncontrado(int);
 	string depActivos();
 	string depInactivos();
+	string depMorosos();
 	string mostrarCliente(string);
 	string clientesMatriculados();
 	string mostrarInfoCurso(int);
@@ -30,6 +31,9 @@ public:
 	T* obtenerGrupo(int);
 	T* obtenerCurso(int);
 	bool cancelarMatricula(string);
+	int cantidadElementos();
+	//void rellenaGrupos(int);
+	string mostrarBasicoGrupos();
 	Nodo<T>* getPrimero();
 	T* obtenerElementoPos(int);
 
@@ -102,7 +106,7 @@ template<class T>
 bool Lista<T>::grupoEncontrado(int num) {
 	actual = primero;
 	while (actual != nullptr) {
-		if (actual->getDato()->getNumero() == num) {
+		if (actual->getDato()->getCodigo() == num) {
 			return true;
 		}
 		actual = actual->getSig();
@@ -125,28 +129,54 @@ bool Lista<T>::cursoEncontrado(int cod) {
 template<class T>
 string Lista<T>::depActivos() {
 	stringstream s;
+	bool existen = false;
 	s << "---Listado de deportistas activos---" << endl;
 	actual = primero;
 	while (actual != nullptr) {
 		if (actual->getDato()->getEstado() == "Activo") {
 			s << actual->getDato()->getToStringBasico();
+			if(!existen) existen = true;
 		}
 		actual = actual->getSig();
 	}
+	if(!existen)
+		return "No hay deportistas activos registrados.\n";
 	return s.str();
 }
 
 template<class T>
 string Lista<T>::depInactivos() {
 	stringstream s;
+	bool existen = false;
 	s << "---Listado de deportistas inactivos---" << endl;
 	actual = primero;
 	while (actual != nullptr) {
 		if (actual->getDato()->getEstado() == "Inactivo") {
 			s << actual->getDato()->getToStringBasico();
+			if(!existen) existen = true;
 		}
 		actual = actual->getSig();
 	}
+	if(!existen)
+		return "No hay deportistas inactivos registrados.\n";
+	return s.str();
+}
+
+template<class T>
+string Lista<T>::depMorosos(){
+	stringstream s;
+	bool existen = false;
+	s << "---Listado de deportistas en morosidad---" << endl;
+	actual = primero;
+	while (actual != nullptr) {
+		if (actual->getDato()->getEstado() == "Moroso") {
+			s << actual->getDato()->getToStringBasico();
+			if (!existen) existen = true;
+		}
+		actual = actual->getSig();
+	}
+	if (!existen)
+		return "No hay deportistas morosos registrados.\n";
 	return s.str();
 }
 
@@ -159,6 +189,7 @@ string Lista<T>::mostrarCliente(string id) {
 		}
 		actual = actual->getSig();
 	}
+	return "no definido el return"; //cambiar luego
 }
 
 template<class T>
@@ -181,6 +212,7 @@ string Lista<T>::mostrarInfoCurso(int cod) {
 		}
 		actual = actual->getSig();
 	}
+	return "return no definido"; //cambiar luego
 }
 
 template<class T>
@@ -190,6 +222,7 @@ string Lista<T>::mostrarCursosBasico() {
 		return actual->getDato()->toStringBasico();
 		actual = actual->getSig();
 	}
+	return "return no definido"; //cambiar luego
 }
 
 template<class T>
@@ -266,6 +299,36 @@ bool Lista<T>::cancelarMatricula(string id) {
 		return true;
 	}
 	return false;
+}
+
+template<class T>
+int Lista<T>::cantidadElementos(){
+	int cant = 0;
+	actual = primero;
+	while (actual != nullptr) {
+		cant++;
+		actual = actual->getSig();
+	}
+	return cant;
+}
+
+//template<class T>
+//void Lista<T>::rellenaGrupos(int can){
+//	can -= cantidadElementos();
+//	for (int i = 0; i < can; i++) {
+//		insertarFinal(new T());
+//	}
+//}
+
+template<class T>
+string Lista<T>::mostrarBasicoGrupos(){
+stringstream s;
+	actual = primero;
+	while (actual != nullptr) {
+		s << actual->getDato()->toStringBasico() << endl;
+		actual = actual->getSig();
+	}
+	return s.str();
 }
 
 template<class T>

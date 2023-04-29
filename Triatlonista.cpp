@@ -13,13 +13,12 @@ Triatlonista::Triatlonista() {
 	fechasActTriatlonista->actualizarTodasFechasAtributo();
 }
 
-Triatlonista::Triatlonista(string _cedula, string _nombre, string _telefono, Fecha* _fechaNac, int _cantPartIronMan, int _cantTriGanados, Ciclista* _ciclista, Corredor* _corredor, Nadador* _nadador) : Deportista(_cedula, _nombre, _telefono, _fechaNac) {
-	cantPartIronMan = _cantPartIronMan;
-	cantTriGanados = _cantTriGanados;
-	ciclista = _ciclista;
-	corredor = _corredor;
-	nadador = _nadador;
-
+Triatlonista::Triatlonista(string _cedula, string _nombre, string _telefono, Fecha* _fechaNac, int _cantPartIronMan, 
+	int _cantTriGanados, int _horasEntrenam, double _temPromedio, char _sexo, double _estatura, double _masaMuscular, 
+	double _peso, double _porcGrasaCorporal): cantPartIronMan{ _cantPartIronMan }, cantTriGanados{ _cantTriGanados }, 
+	ciclista{ new Ciclista(_horasEntrenam, _temPromedio)}, corredor { new Corredor(_sexo, _estatura)}, 
+	nadador{ new Nadador(_masaMuscular, _peso, _porcGrasaCorporal)}, Deportista(_cedula, _nombre, _telefono, _fechaNac)
+{
 	fechasActTriatlonista = new Lista<Fecha>();
 	fechasActTriatlonista->insertarFinal(new Fecha()); //Las fechas se encuentran en el mismo orden en el que se crean los atributos
 	fechasActTriatlonista->insertarFinal(new Fecha());

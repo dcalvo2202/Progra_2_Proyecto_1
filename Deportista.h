@@ -24,4 +24,5 @@ public:
 	virtual string toString() = 0;
 	string getFechaActDeportista(int);
 	string toStringBasico();
+
 };

@@ -133,8 +133,10 @@
     <ClInclude Include="Curso.h" />
     <ClInclude Include="Deportista.h" />
     <ClInclude Include="Fecha.h" />
+    <ClInclude Include="Gimnasio.h" />
     <ClInclude Include="Grupo.h" />
     <ClInclude Include="Instructor.h" />
+    <ClInclude Include="Interfaz2.h" />
     <ClInclude Include="Lista.h" />
     <ClInclude Include="Nadador.h" />
     <ClInclude Include="Nodo.h" />
@@ -148,8 +150,10 @@
     <ClCompile Include="Curso.cpp" />
     <ClCompile Include="Deportista.cpp" />
     <ClCompile Include="Fecha.cpp" />
+    <ClCompile Include="Gimnasio.cpp" />
     <ClCompile Include="Grupo.cpp" />
     <ClCompile Include="Instructor.cpp" />
+    <ClCompile Include="Interfaz2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Nadador.cpp" />
     <ClCompile Include="Nodo.cpp" />

@@ -17,7 +17,7 @@ private:
 	Lista<Cliente>* listClientes;
 public:
 	Grupo();
-	Grupo(Instructor*, int, Fecha*, int, string, string);
+	Grupo(string, string, int, int, string, string, char, int, int, int, int);
 	virtual ~Grupo();
 	void setCupo(int);
 	void setFechaInicio(Fecha*);

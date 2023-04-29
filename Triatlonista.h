@@ -14,7 +14,7 @@ private:
 	Lista<Fecha>* fechasActTriatlonista;
 public:
 	Triatlonista();
-	Triatlonista(string, string, string, Fecha*, int, int, Ciclista*, Corredor*, Nadador*);
+	Triatlonista(string, string, string, Fecha*, int, int, int, double, char, double, double, double, double);
 	virtual ~Triatlonista();
 	void setCantPartIronMan(int);
 	void setCantTriGanados(int);

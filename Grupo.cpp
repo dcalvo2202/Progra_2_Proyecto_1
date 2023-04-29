@@ -12,13 +12,15 @@ Grupo::Grupo() {
 	listClientes = new Lista<Cliente>();
 }
 
-Grupo::Grupo(Instructor* _inst, int _cupo, Fecha* _fechaI, int _semanas, string _horaI, string _horaF) {
-	instructor = _inst;
+Grupo::Grupo(string _nomInst, string _idInst, int _cupo, int _semanas, string _horaI, string _horaF, char _dia, int _numero, int _diaF, int _mesF, int _annioF) {
+	instructor = new Instructor(_nomInst, _idInst);
 	cupo = _cupo;
-	fechaInicio = _fechaI;
+	fechaInicio = new Fecha(_diaF, _mesF, _annioF);
 	semanas = _semanas;
 	horaI = _horaI;
 	horaF = _horaF;
+	dia = _dia;
+	numero = _numero;
 	listClientes = new Lista<Cliente>();
 }
 
