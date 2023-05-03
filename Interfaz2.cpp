@@ -170,9 +170,7 @@ void Interfaz::menuDeportistas() {
 			cout << "\nTelefono: ";
 			cin >> tel;
 			cout << "\nNombre completo: ";
-			cin >> nom;
-			//getline(cin, nom);
-			 
+			getline(cin, nom);			 
 			cout << "\nFecha de nacimiento (DD/MM/AAAA): ";
 			cout << "\nDia: ";
 			cin >> dia;
@@ -696,13 +694,13 @@ void Interfaz::menuCursos() {
 			cout << "Digite el codigo del curso: ";
 			cin >> cod;
 			cout << "Digite el nombre del curso: ";
-			cin >> nombre;
+			getline(cin, nombre);
 			cout << "Digite el nivel (P = Principiantes / I = Intermedio / A = Avanzado): ";
 			cin >> nivel;
 			//cout << "Cantidad de grupos: ";
 			//cin >> cantGrupos;
 			cout << "Descripcion del curso: ";
-			cin >> descrip;
+			getline(cin, descrip);
 			Curso* c = new Curso(descrip, nombre, nivel, cod);
 			//c->getListGrupos()->rellenaGrupos(cantGrupos);
 			gym->getListCursos()->insertarFinal(c);
@@ -827,7 +825,7 @@ void Interfaz::modificarCurso() {
 
 			case 2:
 				cout << "Ingrese el nuevo nombre del curso: ";
-				cin >> nombre;
+				getline(cin, nombre);
 				gym->getListCursos()->obtenerCurso(codAux)->setNombre(nombre);
 				cout<<"Nombre modificado con exito!\n";
 				system("pause");
@@ -845,7 +843,7 @@ void Interfaz::modificarCurso() {
 
 			case 4:
 				cout << "Ingrese la nueva descripcion del curso: ";
-				cin >> descrip;
+				getline(cin, descrip);
 				gym->getListCursos()->obtenerCurso(codAux)->setDescrip(descrip);
 				cout << "Descripcion modificada con exito!\n";
 				system("pause");
@@ -906,7 +904,7 @@ void Interfaz::menuGrupos() {
 				cout << "Digite el ID del instructor: ";
 				cin >> id;
 				cout << "Digite el nombre del instructor: ";
-				cin >> nombre;
+				getline(cin, nombre);
 				cout << "Digite el cupo maximo: ";
 				cin >> cupo;
 				cout << "Digite el numero de grupo: ";
@@ -1012,7 +1010,24 @@ void Interfaz::menuGrupos() {
 			break;
 
 		case 6:
-			//Cancelacion de matricula en grupo
+			cout << "Digite el ID del deportista: ";
+			cin >> idAux;
+			if (gym->getListClientes()->clienteEncontrado(idAux) == true) {
+				cout << "Deportista encontrado!" << endl;
+
+				cout << "Digite el codigo del curso: " << endl;
+				cin >> cod;
+				if (gym->getListCursos()->cursoEncontrado(cod) == true) {
+					cout << "Curso encontrado" << endl;
+					cout << gym->getListCursos()->obtenerCurso(cod)->getListGrupos()->mostrarInfoGrupos() << endl;
+					cout << "Digite el numero de grupo deseado: " << endl;
+					cin >> numAux;
+					gym->getListCursos()->obtenerCurso(cod)->getListGrupos()->obtenerGrupo(numAux)->desmatricular(idAux);
+				}
+				else {
+					cout << "No se encontro ningun curso con ese codigo" << endl;
+				}
+			}
 			break;
 
 		case 7:
@@ -1073,7 +1088,7 @@ void Interfaz::modificarGrupo() {
 					else {
 						if (opc == 2) {
 							cout << "Digite el nuevo nombre del instructor: " << endl;
-							cin >> nombre;
+							getline(cin, nombre);
 							gym->getListCursos()->obtenerCurso(cod)->getListGrupos()->obtenerGrupo(numAux)->getInstructor()->setNombre(nombre);
 							cout << "Nombre del instructor modificado con exito!\n";
 						}

@@ -281,7 +281,6 @@ bool Lista<T>::cancelarMatricula(string id) {
 	else {
 		if (primero->getDato()->getIdDeportista() == id) {
 			actual = actual->getSig();
-			delete (primero);
 			primero = actual;
 			return true;
 		}
@@ -295,7 +294,6 @@ bool Lista<T>::cancelarMatricula(string id) {
 	}
 	else {
 		aux->setSig(actual->getSig());
-		delete actual;
 		return true;
 	}
 	return false;
