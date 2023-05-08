@@ -9,45 +9,58 @@ class Lista {
 private:
 	Nodo<T>* primero;
 	Nodo<T>* actual;
-	int can;
+
 public:
 	Lista();
 	virtual ~Lista();
-	void insertarFinal(T*);
-	string toString();
-	int getCan();
-	bool clienteEncontrado(string);
-	bool grupoEncontrado(int);
-	bool cursoEncontrado(int);
+
+	//Metodos de Clientes
 	string depActivos();
 	string depInactivos();
 	string depMorosos();
 	string mostrarCliente(string);
 	string clientesMatriculados();
-	string mostrarInfoCurso(int);
-	string mostrarCursosBasico();
-	string mostrarInfoGrupos();
+	bool clienteEncontrado(string);
 	T* obtenerCliente(string);
-	T* obtenerGrupo(int);
-	T* obtenerCurso(int);
 	bool cancelarMatricula(string);
-	int cantidadElementos();
-	//void rellenaGrupos(int);
+
+	//Metodos de Cursos
+	bool cursoEncontrado(string);
+	string mostrarInfoCurso(string);
+	string mostrarCursosBasico();
+	T* obtenerCurso(string);
+
+	//Metodos de Grupos
+	bool grupoEncontrado(int);
 	string mostrarBasicoGrupos();
-	Nodo<T>* getPrimero();
-	T* obtenerElementoPos(int);
+	string mostrarInfoGrupos();
+	T* obtenerGrupo(int);
+	T* obtenerGrupoPorCliente(string);
+	bool verificarMatriculaExistente(string);
 
 	//Para utilizar con fecha
-	void actualizarFechaAtributo(int);
+	void actualizarFechaAtributo(int); 
 	void actualizarTodasFechasAtributo();
 
-
+	//Metodos Generales
+	void insertarFinal(T*);
+	string toString();
+	int cantidadElementos();
+	Nodo<T>* getPrimero();
+	T* obtenerElementoPos(int);
+	string guardarDatos();
+	string guardarIdentificador();
+	T* obtenerUltimoElemento();
+	
+	//void rellenaGrupos(int);
+	
 };
+
+//Constructor y Destructor
 template<class T>
 Lista<T>::Lista() {
 	primero = nullptr;
 	actual = nullptr;
-	can = 0;
 }
 
 template<class T>
@@ -59,75 +72,9 @@ Lista<T>::~Lista() {
 	}
 }
 
+//Metodos de Clientes
 template<class T>
-void Lista<T>::insertarFinal(T* dato) {
-	actual = primero;
-	if (primero == nullptr) {
-		primero = new Nodo<T>(dato, nullptr);
-	}
-	else {
-		while (actual->getSig() != nullptr) {
-			actual = actual->getSig();
-		}
-		actual->setSig(new Nodo<T>(dato, nullptr));
-	}
-	can++;
-}
-
-template<class T>
-string Lista<T>::toString() {
-	stringstream s;
-	actual = primero;
-	while (actual != nullptr) {
-		s << actual->getDato()->toString() << endl;
-		actual = actual->getSig();
-	}
-	return s.str();
-}
-
-template<class T>
-int Lista<T>::getCan() {
-	return can;
-}
-
-template<class T>
-bool Lista<T>::clienteEncontrado(string _id) {
-	actual = primero;
-	while (actual != nullptr) {
-		if (actual->getDato()->getIdDeportista() == _id) {
-			return true;
-		}
-		actual = actual->getSig();
-	}
-	return false;
-}
-
-template<class T>
-bool Lista<T>::grupoEncontrado(int num) {
-	actual = primero;
-	while (actual != nullptr) {
-		if (actual->getDato()->getCodigo() == num) {
-			return true;
-		}
-		actual = actual->getSig();
-	}
-	return false;
-}
-
-template<class T>
-bool Lista<T>::cursoEncontrado(int cod) {
-	actual = primero;
-	while (actual != nullptr) {
-		if (actual->getDato()->getCodigo() == cod) {
-			return true;
-		}
-		actual = actual->getSig();
-	}
-	return false;
-}
-
-template<class T>
-string Lista<T>::depActivos() {
+string Lista<T>::depActivos() { //Devuelve un string con los clientes activos
 	stringstream s;
 	bool existen = false;
 	s << "---Listado de deportistas activos---" << endl;
@@ -135,17 +82,17 @@ string Lista<T>::depActivos() {
 	while (actual != nullptr) {
 		if (actual->getDato()->getEstado() == "Activo") {
 			s << actual->getDato()->getToStringBasico();
-			if(!existen) existen = true;
+			if (!existen) existen = true;
 		}
 		actual = actual->getSig();
 	}
-	if(!existen)
+	if (!existen)
 		return "No hay deportistas activos registrados.\n";
 	return s.str();
 }
 
 template<class T>
-string Lista<T>::depInactivos() {
+string Lista<T>::depInactivos() { //Devuelve un string con los clientes inactivos
 	stringstream s;
 	bool existen = false;
 	s << "---Listado de deportistas inactivos---" << endl;
@@ -153,22 +100,23 @@ string Lista<T>::depInactivos() {
 	while (actual != nullptr) {
 		if (actual->getDato()->getEstado() == "Inactivo") {
 			s << actual->getDato()->getToStringBasico();
-			if(!existen) existen = true;
+			if (!existen) existen = true;
 		}
 		actual = actual->getSig();
 	}
-	if(!existen)
+	if (!existen)
 		return "No hay deportistas inactivos registrados.\n";
 	return s.str();
 }
 
 template<class T>
-string Lista<T>::depMorosos(){
+string Lista<T>::depMorosos() {	//Devuelve un string con los clientes morosos
 	stringstream s;
 	bool existen = false;
 	s << "---Listado de deportistas en morosidad---" << endl;
 	actual = primero;
 	while (actual != nullptr) {
+		actual->getDato()->determinaMorosidad();
 		if (actual->getDato()->getEstado() == "Moroso") {
 			s << actual->getDato()->getToStringBasico();
 			if (!existen) existen = true;
@@ -181,7 +129,7 @@ string Lista<T>::depMorosos(){
 }
 
 template<class T>
-string Lista<T>::mostrarCliente(string id) {
+string Lista<T>::mostrarCliente(string id) { //Devuelve un string con la informacion de un cliente especifico
 	actual = primero;
 	while (actual != nullptr) {
 		if (actual->getDato()->getIdDeportista() == id) {
@@ -189,11 +137,11 @@ string Lista<T>::mostrarCliente(string id) {
 		}
 		actual = actual->getSig();
 	}
-	return "no definido el return"; //cambiar luego
+	return "El cliente indicado no existe.";
 }
 
 template<class T>
-string Lista<T>::clientesMatriculados() {
+string Lista<T>::clientesMatriculados() { //Devuelve un string con los clientes matriculados en un grupo
 	stringstream s;
 	actual = primero;
 	while (actual != nullptr) {
@@ -204,39 +152,19 @@ string Lista<T>::clientesMatriculados() {
 }
 
 template<class T>
-string Lista<T>::mostrarInfoCurso(int cod) {
+bool Lista<T>::clienteEncontrado(string _id) { //Devuelve true si el cliente existe
 	actual = primero;
 	while (actual != nullptr) {
-		if (actual->getDato()->getCodigo() == cod) {
-			return actual->getDato()->toString();
+		if (actual->getDato()->getIdDeportista() == _id) {
+			return true;
 		}
 		actual = actual->getSig();
 	}
-	return "return no definido"; //cambiar luego
+	return false;
 }
 
 template<class T>
-string Lista<T>::mostrarCursosBasico() {
-	actual = primero;
-	while (actual != nullptr) {
-		return actual->getDato()->toStringBasico();
-		actual = actual->getSig();
-	}
-	return "return no definido"; //cambiar luego
-}
-
-template<class T>
-string Lista<T>::mostrarInfoGrupos() {
-	actual = primero;
-	while (actual != nullptr) {
-		return actual->getDato()->toStringBasico();
-		actual = actual->getSig();
-	}
-	return ""; //Revisar este metodo, parece que se quiere mostrar informacion de los grupos, pero el return evita eso.
-}
-
-template<class T>
-T* Lista<T>::obtenerCliente(string id) {
+T* Lista<T>::obtenerCliente(string id) { //Devuelve un cliente especifico
 	actual = primero;
 	while (actual != nullptr) {
 		if (actual->getDato()->getIdDeportista() == id) {
@@ -248,31 +176,7 @@ T* Lista<T>::obtenerCliente(string id) {
 }
 
 template<class T>
-T* Lista<T>::obtenerGrupo(int num) {
-	actual = primero;
-	while (actual != nullptr) {
-		if (actual->getDato()->getNumero() == num) {
-			return actual->getDato();
-		}
-		actual = actual->getSig();
-	}
-	return nullptr;
-}
-
-template<class T>
-T* Lista<T>::obtenerCurso(int cod) {
-	actual = primero;
-	while (actual != nullptr) {
-		if (actual->getDato()->getCodigo() == cod) {
-			return actual->getDato();
-		}
-		actual = actual->getSig();
-	}
-	return nullptr;
-}
-
-template<class T>
-bool Lista<T>::cancelarMatricula(string id) {
+bool Lista<T>::cancelarMatricula(string id) { //Elimina un cliente de la lista de matriculados de un grupo
 	Nodo<T>* aux = nullptr;
 	actual = primero;
 	if (primero == nullptr) {
@@ -281,7 +185,7 @@ bool Lista<T>::cancelarMatricula(string id) {
 	else {
 		if (primero->getDato()->getIdDeportista() == id) {
 			actual = actual->getSig();
-			delete (primero);
+
 			primero = actual;
 			return true;
 		}
@@ -295,14 +199,182 @@ bool Lista<T>::cancelarMatricula(string id) {
 	}
 	else {
 		aux->setSig(actual->getSig());
-		delete actual;
+
 		return true;
 	}
 	return false;
 }
 
+
+//Metodos de Cursos
 template<class T>
-int Lista<T>::cantidadElementos(){
+bool Lista<T>::cursoEncontrado(string cod) { //Devuelve true si el curso existe
+	actual = primero;
+	while (actual != nullptr) {
+		if (actual->getDato()->getIdentificador() == cod) {
+			return true;
+		}
+		actual = actual->getSig();
+	}
+	return false;
+}
+
+template<class T>
+string Lista<T>::mostrarInfoCurso(string cod) { //Devuelve un string con la informacion de un curso especifico
+	actual = primero;
+	while (actual != nullptr) {
+		if (actual->getDato()->getIdentificador() == cod) {
+			return actual->getDato()->toString();
+		}
+		actual = actual->getSig();
+	}
+	return "El curso indicado no existe.";
+}
+
+template<class T>
+string Lista<T>::mostrarCursosBasico() { //Devuelve un string con la informacion basica de los cursos
+	stringstream s;
+	actual = primero;
+	while (actual != nullptr) {
+		s << actual->getDato()->toStringBasico();
+		actual = actual->getSig();
+	}
+	return s.str();
+}
+
+template<class T>
+T* Lista<T>::obtenerCurso(string cod) { //Devuelve un curso especifico
+	actual = primero;
+	while (actual != nullptr) {
+		if (actual->getDato()->getIdentificador() == cod) {
+			return actual->getDato();
+		}
+		actual = actual->getSig();
+	}
+	return nullptr;
+}
+
+//Metodos de Grupos
+template<class T>
+bool Lista<T>::grupoEncontrado(int num) { //Devuelve true si el grupo existe
+	actual = primero;
+	while (actual != nullptr) {
+		if (actual->getDato()->getNumero() == num) {
+			return true;
+		}
+		actual = actual->getSig();
+	}
+	return false;
+}
+
+template<class T>
+string Lista<T>::mostrarBasicoGrupos() { //Devuelve un string con la informacion basica de los grupos
+	stringstream s;
+	actual = primero;
+	if (actual == nullptr) {
+		s << " No hay grupos registrados para este curso." << endl;
+	}
+	while (actual != nullptr) {
+		s << actual->getDato()->toStringBasico2();
+		actual = actual->getSig();
+	}
+	return s.str();
+}
+
+template<class T>
+string Lista<T>::mostrarInfoGrupos() { //Devuelve un string con informacion un poco mas completa de los grupos
+	stringstream s;
+	actual = primero;
+	while (actual != nullptr) {
+		s << actual->getDato()->toStringBasico();
+		actual = actual->getSig();
+	}
+	return s.str();
+}
+
+template<class T>
+T* Lista<T>::obtenerGrupo(int num) { //Devuelve un grupo especifico
+	actual = primero;
+	while (actual != nullptr) {
+		if (actual->getDato()->getNumero() == num) {
+			return actual->getDato();
+		}
+		actual = actual->getSig();
+	}
+	return nullptr;
+}
+
+template<class T>
+T* Lista<T>::obtenerGrupoPorCliente(string id){ //Busca un cliente en todos los grupos que tenga un curso y devuelve ese grupo
+	actual = primero;
+	while (actual != nullptr) {
+		if (actual->getDato()->getListClientes()->clienteEncontrado(id)) {
+			return actual->getDato();
+		}
+		actual = actual->getSig();
+	}
+	return nullptr;
+}
+
+template<class T>
+bool Lista<T>::verificarMatriculaExistente(string id) { //Verifica si el cliente ya esta matriculado en algun grupo de un curso especifico
+	actual = primero;
+	while (actual != nullptr) {
+		if (actual->getDato()->getListClientes()->clienteEncontrado(id)) {
+			return true;
+		}
+		actual = actual->getSig();
+	}
+	return false;
+}
+
+//Para utilizar con fecha
+template<class T>
+void Lista<T>::actualizarFechaAtributo(int act) { //Actualiza los valores de un objeto fecha por los de la fecha actual del sistema
+	actual = primero;
+	for (int i = 0; i < act; i++) {
+		actual = actual->getSig();
+	}
+	actual->getDato()->actualizarPorActual();
+}
+
+template<class T>
+void Lista<T>::actualizarTodasFechasAtributo() { //Actualiza los valores de todos los objetos fecha en una lista por los de la fecha actual del sistema
+	actual = primero;
+	while (actual != nullptr) {
+		actual->getDato()->actualizarPorActual();
+		actual = actual->getSig();
+	}
+}
+
+//Metodos Generales
+template<class T>
+void Lista<T>::insertarFinal(T* dato) { //Inserta un dato al final de la lista
+	actual = primero;
+	if (primero == nullptr) {
+		primero = new Nodo<T>(dato, nullptr);
+	}
+	else {
+		while (actual->getSig() != nullptr) {
+			actual = actual->getSig();
+		}
+		actual->setSig(new Nodo<T>(dato, nullptr));
+	}
+}
+
+template<class T>
+string Lista<T>::toString() { //Devuelve un string con la informacion de todos los elementos de la lista
+	stringstream s;
+	actual = primero;
+	while (actual != nullptr) {
+		s << actual->getDato()->toString() << endl;
+		actual = actual->getSig();
+	}
+	return s.str();
+}
+
+template<class T>
+int Lista<T>::cantidadElementos(){ //Devuelve la cantidad de elementos en la lista
 	int cant = 0;
 	actual = primero;
 	while (actual != nullptr) {
@@ -312,30 +384,11 @@ int Lista<T>::cantidadElementos(){
 	return cant;
 }
 
-//template<class T>
-//void Lista<T>::rellenaGrupos(int can){
-//	can -= cantidadElementos();
-//	for (int i = 0; i < can; i++) {
-//		insertarFinal(new T());
-//	}
-//}
+template<class T>
+Nodo<T>* Lista<T>::getPrimero() { return primero; } //Devuelve el primer nodo de la lista
 
 template<class T>
-string Lista<T>::mostrarBasicoGrupos(){
-stringstream s;
-	actual = primero;
-	while (actual != nullptr) {
-		s << actual->getDato()->toStringBasico() << endl;
-		actual = actual->getSig();
-	}
-	return s.str();
-}
-
-template<class T>
-Nodo<T>* Lista<T>::getPrimero() { return primero; }
-
-template<class T>
-T* Lista<T>::obtenerElementoPos(int pos) {
+T* Lista<T>::obtenerElementoPos(int pos) { //Devuelve un elemento especifico de la lista segun su posicion
 	actual = primero;
 	for (int i = 0; i < pos; i++) {
 		actual = actual->getSig();
@@ -343,21 +396,32 @@ T* Lista<T>::obtenerElementoPos(int pos) {
 	return actual->getDato();
 }
 
-//Para utilizar con fecha
 template<class T>
-void Lista<T>::actualizarFechaAtributo(int act) {
+string Lista<T>::guardarDatos(){ //Activa los metodos toStringArchivo() de los objetos para guardar los datos de cada uno en un archivo .txt
+stringstream s;
 	actual = primero;
-	for (int i = 0; i < act; i++) {
+	while (actual != nullptr) {
+		s << actual->getDato()->toStringArchivo();
 		actual = actual->getSig();
 	}
-	actual->getDato()->actualizarPorActual();
+	return s.str();
 }
 
 template<class T>
-void Lista<T>::actualizarTodasFechasAtributo() {
+string Lista<T>::guardarIdentificador() { //Devuelve un string con los identificadores de los objetos en la lista
+	stringstream s;
 	actual = primero;
 	while (actual != nullptr) {
-		actual->getDato()->actualizarPorActual();
+		s<<actual->getDato()->getIdentificador();
 		actual = actual->getSig();
 	}
+}
+
+template<class T>
+T* Lista<T>::obtenerUltimoElemento(){ //Devuelve el ultimo elemento de la lista
+	actual = primero;
+	while (actual->getSig() != nullptr) {
+		actual = actual->getSig();
+	}
+	return actual->getDato();
 }

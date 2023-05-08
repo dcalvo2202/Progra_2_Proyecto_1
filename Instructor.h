@@ -11,10 +11,11 @@ public:
 	Instructor();
 	Instructor(string, string);
 	virtual ~Instructor();
-	void setNombre(string);
-	void setId(string);
 	string getNombre();
+	void setNombre(string);
 	string getId();
+	void setId(string);
 	string toString();
+	string toStringArchivo();
 };
 

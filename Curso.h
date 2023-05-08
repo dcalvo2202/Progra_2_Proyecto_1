@@ -7,22 +7,24 @@ private:
 	string descrip;
 	string nombre;
 	char nivel;
-	int codigo;
+	string codigo;
 	Lista<Grupo>* listGrupos;
+
 public:
 	Curso();
-	Curso(string, string, char, int);
+	Curso(string, string, char, string);
 	virtual ~Curso();
-	void setDescrip(string);
-	void setNombre(string);
-	void setNivel(char);
-	void setCodigo(int);
 	string getDescrip();
+	void setDescrip(string);
 	string getNombre();
+	void setNombre(string);
 	char getNivel();
-	int getCodigo();
+	void setNivel(char);
+	void setCodigo(string);
+	string getIdentificador();
 	Lista<Grupo>* getListGrupos();
 	string toString();
 	string toStringBasico();
+	string toStringArchivo();
 };
 

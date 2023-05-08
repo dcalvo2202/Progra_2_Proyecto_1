@@ -2,6 +2,7 @@
 #include "Gimnasio.h"
 #include "Triatlonista.h"
 #include <string>
+#include <fstream> //Librería de escritura y lectura de archivos
 
 class Interfaz {
 private:
@@ -16,9 +17,11 @@ public:
 	void modificarDeportista();
 	void menuCursos();
 	void modificarCurso();
+	void guardarDatos();
+	void cargarDatos();
 	void menuGrupos();
 	void modificarGrupo();
-	//void menuPagos();
+	void menuPagos();
 
 	
 };

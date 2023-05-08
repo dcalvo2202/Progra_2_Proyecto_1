@@ -9,17 +9,16 @@ class Corredor {
 private:
 	char sexo;
 	double estatura;
-	Lista<Fecha>* fechasActCorredor; //Se guarda la fecha en la que se actualizo cada atributo
 
 public:
 	Corredor();
 	Corredor(char, double);
 	virtual ~Corredor();
-	void setSexo(char);
-	void setEstatura(double);
 	char getSexo();
+	void setSexo(char);
 	double getEstatura();
-	string getFechaActCorredor(int); //Retorna la fecha en la que se actualizo el atributo
+	void setEstatura(double);
 	string toString();
+	string toStringArchivo();
 };
 

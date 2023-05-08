@@ -6,6 +6,7 @@ private:
 	Fecha* fechaPago;
 	double monto;
 public:
+	Pago(int, int, int, double);
 	Pago(Fecha*, double);
 	Pago();
 	virtual ~Pago();
@@ -14,5 +15,6 @@ public:
 	Fecha* getFecha();
 	double getMonto();
 	string toString();
+	string toStringArchivo();
 };
 

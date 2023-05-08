@@ -10,19 +10,18 @@ private:
 	double masaMuscular;
 	double peso;
 	double porcGrasaCorp;
-	Lista<Fecha>* fechasActNadador; //Se guarda la fecha en la que se actualizo cada atributo
 
 public:
 	Nadador();
 	Nadador(double, double, double);
 	virtual ~Nadador();
-	void setMasaMuscular(double);
-	void setPeso(double);
-	void setPorcGrasaCorp(double);
 	double getMasaMuscular();
+	void setMasaMuscular(double);
 	double getPeso();
+	void setPeso(double);
 	double getPorcGrasaCorp();
-	string getFechaActNadador(int); //Retorna la fecha en la que se actualizo el atributo
+	void setPorcGrasaCorp(double);
 	string toString();
+	string toStringArchivo();
 };
 

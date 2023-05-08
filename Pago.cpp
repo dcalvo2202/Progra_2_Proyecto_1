@@ -1,14 +1,10 @@
 #include "Pago.h"
 
-Pago::Pago(Fecha* _fecha, double _monto) {
-	fechaPago = _fecha;
-	monto = _monto;
-}
+Pago::Pago(int _dia, int _mes, int _annio, double _monto) : fechaPago{ new Fecha(_dia, _mes, _annio) }, monto{ _monto } {}
 
-Pago::Pago() {
-	fechaPago = new Fecha();
-	monto = 0;
-}
+Pago::Pago(Fecha* _fecha, double _monto) : fechaPago{ _fecha }, monto{ _monto } {}
+
+Pago::Pago() : fechaPago{ new Fecha() }, monto{ 0 } {}
 
 Pago::~Pago() {
 }
@@ -31,7 +27,14 @@ double Pago::getMonto() {
 
 string Pago::toString() {
 	stringstream s;
-	s << "Fecha de pago   " << "Mes   " << "Monto" << endl;
-	s << fechaPago->toString() << "   " << fechaPago->getMes() << "   " << monto << endl;
+	s << fechaPago->toString() << "\t\t" << fechaPago->getMes() << "\t\t" << monto << endl;
+	return s.str();
+}
+
+string Pago::toStringArchivo() {
+	stringstream s;
+	s << fechaPago->toStringArchivo();
+	s << monto << DELIMITA_CAMPO;
+	s << 'P' << DELIMITA_CAMPO << DELIMITA_REGISTRO;
 	return s.str();
 }

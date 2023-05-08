@@ -8,21 +8,21 @@ protected:
 	string nombre;
 	string telefono;
 	Fecha* fechaNac;
-	Lista<Fecha>* fechasActDeportista;
+
 public:
 	Deportista();
-	Deportista(string, string, string, Fecha*);
+	Deportista(string, string, string, int, int, int);
 	virtual ~Deportista();
-	void setCedula(string);
-	void setNombre(string);
-	void setTelefono(string);
-	void setFechaNac(Fecha*);
 	string getId();
+	void setCedula(string);
 	string getNombre();
+	void setNombre(string);
 	string getTelefono();
+	void setTelefono(string);
 	Fecha* getFechaNac();
+	void setFechaNac(Fecha*);
 	virtual string toString() = 0;
-	string getFechaActDeportista(int);
 	string toStringBasico();
+	virtual string toStringArchivo() = 0;
 
 };

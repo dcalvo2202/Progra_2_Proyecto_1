@@ -1,47 +1,30 @@
 #include "Ciclista.h"
 
-Ciclista::Ciclista() : horasEntreno{ 0 }, temPromedio{ 0 } {
-	fechasActCiclista = new Lista<Fecha>();
-	fechasActCiclista->insertarFinal(new Fecha()); //Las fechas se guardan en el mismo orden en el que se crean los atributos
-	fechasActCiclista->insertarFinal(new Fecha());
-	fechasActCiclista->actualizarTodasFechasAtributo();
-}
+//Constructores y Destructor
+Ciclista::Ciclista() : horasEntreno{ 0 }, temPromedio{ 0 } {}
 
-Ciclista::Ciclista(int _horasEntreno, double _temPromedio) : horasEntreno{ _horasEntreno }, temPromedio{ _temPromedio } {
-	fechasActCiclista = new Lista<Fecha>();
-	fechasActCiclista->insertarFinal(new Fecha);
-	fechasActCiclista->insertarFinal(new Fecha);
-	fechasActCiclista->actualizarTodasFechasAtributo();
-}
+Ciclista::Ciclista(int _horasEntreno, double _temPromedio) : horasEntreno{ _horasEntreno }, temPromedio{ _temPromedio } {}
 
-Ciclista::~Ciclista() {
-}
+Ciclista::~Ciclista() {}
 
-void Ciclista::setHorasEntreno(int _horasEntreno) {
-	horasEntreno = _horasEntreno;
-	fechasActCiclista->actualizarFechaAtributo(0);
-}
+//Setters y Getters
+int Ciclista::getHorasEntreno() { return horasEntreno; }
+void Ciclista::setHorasEntreno(int _horasEntreno) { horasEntreno = _horasEntreno; }
 
-void Ciclista::setTemPromedio(double _temPromedio) {
-	temPromedio = _temPromedio;
-	fechasActCiclista->actualizarFechaAtributo(1);
-}
+double Ciclista::getTemPromedio() { return temPromedio; }
+void Ciclista::setTemPromedio(double _temPromedio) { temPromedio = _temPromedio; }
 
-int Ciclista::getHorasEntreno() {
-	return horasEntreno;
-}
-
-double Ciclista::getTemPromedio() {
-	return temPromedio;
-}
-
-string Ciclista::getFechaActCiclista(int atr) {
-	return fechasActCiclista->obtenerElementoPos(atr)->toString();
-}
-
+//Metodos toString
 string Ciclista::toString() {
 	stringstream s;
 	s << "Temperatura promedio del atleta: " << temPromedio << endl;
 	s << "Horas de entrenamiento del atleta: " << horasEntreno << endl;
+	return s.str();
+}
+
+string Ciclista::toStringArchivo() { //Devuelve un string con los datos del ciclista separados por DELIMITA_CAMPO para guardarlos en el archivo
+	stringstream s;
+	s << horasEntreno << DELIMITA_CAMPO;
+	s << temPromedio << DELIMITA_CAMPO;
 	return s.str();
 }

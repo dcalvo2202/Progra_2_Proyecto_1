@@ -1,77 +1,28 @@
 #include "Deportista.h"
 
-Deportista::Deportista() {
-	id = " ";
-	nombre = " ";
-	telefono = " ";
-	fechaNac = nullptr;
+//Constructores y Destructor
+Deportista::Deportista() : id{ " " }, nombre{ " " }, telefono{ " " }, fechaNac{ new Fecha() } {}
 
-	fechasActDeportista = new Lista<Fecha>();
-	fechasActDeportista->insertarFinal(new Fecha()); //Las fechas se encuentran en el mismo orden en el que se crean los atributos
-	fechasActDeportista->insertarFinal(new Fecha());
-	fechasActDeportista->insertarFinal(new Fecha());
-	fechasActDeportista->insertarFinal(new Fecha());
-	fechasActDeportista->actualizarTodasFechasAtributo();
-}
+Deportista::Deportista(string _cedula, string _nombre, string _telefono, int _dia, int _mes, int _annio)
+	: id{ _cedula }, nombre{ _nombre }, telefono{ _telefono }, fechaNac{ new Fecha(_dia, _mes, _annio) } 
+{}
 
-Deportista::Deportista(string _cedula, string _nombre, string _telefono, Fecha* _fechaNac) {
-	id = _cedula;
-	nombre = _nombre;
-	telefono = _telefono;
-	fechaNac = _fechaNac;
+Deportista::~Deportista() { delete fechaNac; }
 
-	fechasActDeportista = new Lista<Fecha>();
-	fechasActDeportista->insertarFinal(new Fecha()); //Las fechas se encuentran en el mismo orden en el que se crean los atributos
-	fechasActDeportista->insertarFinal(new Fecha());
-	fechasActDeportista->insertarFinal(new Fecha());
-	fechasActDeportista->insertarFinal(new Fecha());
-	fechasActDeportista->actualizarTodasFechasAtributo();
-}
+//Setters y Getters
+string Deportista::getId() { return id; }
+void Deportista::setCedula(string _cedula) { id = _cedula; }
 
-Deportista::~Deportista()
-{
-}
+string Deportista::getNombre() { return nombre; }
+void Deportista::setNombre(string _nombre) { nombre = _nombre; }
 
-void Deportista::setCedula(string _cedula) {
-	id = _cedula;
-	fechasActDeportista->actualizarFechaAtributo(0);
-}
+string Deportista::getTelefono() { return telefono; }
+void Deportista::setTelefono(string _telefono) { telefono = _telefono; }
 
-void Deportista::setNombre(string _nombre) {
-	nombre = _nombre;
-	fechasActDeportista->actualizarFechaAtributo(1);
-}
+Fecha* Deportista::getFechaNac() { return fechaNac; }
+void Deportista::setFechaNac(Fecha* _fechaNac) { fechaNac = _fechaNac; }
 
-void Deportista::setTelefono(string _telefono) {
-	telefono = _telefono;
-	fechasActDeportista->actualizarFechaAtributo(2);
-}
-
-void Deportista::setFechaNac(Fecha* _fechaNac) {
-	fechaNac = _fechaNac;
-	fechasActDeportista->actualizarFechaAtributo(3);
-}
-
-string Deportista::getId() {
-	return id;
-}
-
-string Deportista::getNombre() {
-	return nombre;
-}
-
-string Deportista::getTelefono() {
-	return telefono;
-}
-
-Fecha* Deportista::getFechaNac() {
-	return fechaNac;
-}
-
-string Deportista::getFechaActDeportista(int atr) {
-	return fechasActDeportista->obtenerElementoPos(atr)->toString();
-}
-
+//Metodos toString()
 string Deportista::toStringBasico() {
 	stringstream s;
 	s << id << "  " << nombre << endl;

@@ -4,6 +4,7 @@
 #include "Corredor.h"
 #include "Nadador.h"
 
+
 class Triatlonista : public Deportista {
 private:
 	int cantPartIronMan;
@@ -11,22 +12,22 @@ private:
 	Ciclista* ciclista;
 	Corredor* corredor;
 	Nadador* nadador;
-	Lista<Fecha>* fechasActTriatlonista;
+
 public:
 	Triatlonista();
-	Triatlonista(string, string, string, Fecha*, int, int, int, double, char, double, double, double, double);
+	Triatlonista(string, string, string, int, int, int, double, char, double, double, double, double, int, int, int);
 	virtual ~Triatlonista();
-	void setCantPartIronMan(int);
-	void setCantTriGanados(int);
-	void setCiclista(Ciclista*);
-	void setCorredor(Corredor*);
-	void setNadador(Nadador*);
 	int getCantPartIronMan();
+	void setCantPartIronMan(int);
 	int getCantTriGanados();
+	void setCantTriGanados(int);
 	Ciclista* getCiclista();
+	void setCiclista(Ciclista*);
 	Corredor* getCorredor();
+	void setCorredor(Corredor*);
 	Nadador* getNadador();
-	string getFechaActTriatlonista(int);
+	void setNadador(Nadador*);
 	string toString();
+	virtual string toStringArchivo();
 };
 

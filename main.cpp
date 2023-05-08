@@ -2,13 +2,28 @@
 #include "Cliente.h"
 #include "Lista.h"
 #include "Interfaz2.h"
+#include <locale.h>
 
 int main() {
+	setlocale(LC_CTYPE, "Spanish"); //Define el español como lenguaje del programa, permitiendo imprimir letras tildadas, "ñ", "¿" y demás
+
 	Interfaz* interfaz = new Interfaz();
 
 	interfaz->menuPrincipal();
 
+
 	delete interfaz;
+
+	/*Fecha* nac = new Fecha(28, 5, 2003);
+	
+	Deportista* n1 = new Triatlonista("1111", "Bayron Vega", "89177902", nac, 3, 3, 14, 16, 'M', 1.73, 23, 54.4, 19);
+
+	Cliente* r = new Cliente(n1);
+
+	std::cout << r->toStringArchivo();*/
+
+
+
 
  //   Ciclista* ciclista1 = new Ciclista(10, 25.0);
  //   Corredor* corredor1 = new Corredor('M', 1.8);
@@ -45,6 +60,7 @@ int main() {
 
 	//cout << lista->toString();
 	//delete lista;
+	cout << "este es el pause del main";
 	system("pause");
 	return 0;
 }
